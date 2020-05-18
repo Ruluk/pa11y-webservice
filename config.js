@@ -15,7 +15,9 @@
 'use strict';
 
 const fs = require('fs');
-const jsonPath = `./config/${process.env.NODE_ENV || 'development'}.json`;
+const environment = (process.env.NODE_ENV || 'development');
+const jsonPath = `./config/${environment}.json`;
+const jsPath = `./config/${environment}.js`;
 
 if (fs.existsSync(jsonPath)) {
 	const jsonConfig = require(jsonPath);
@@ -28,6 +30,8 @@ if (fs.existsSync(jsonPath)) {
 		cron: env('CRON', jsonConfig.cron),
 		chromeLaunchConfig: jsonConfig.chromeLaunchConfig || {}
 	};
+} else if (fs.existsSync(jsPath)) {
+	module.exports = require(jsPath);
 } else {
 	module.exports = {
 		database: env('DATABASE', 'mongodb://localhost/pa11y-webservice'),
