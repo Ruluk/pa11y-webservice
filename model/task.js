@@ -307,7 +307,7 @@ function possibleCsvListToArray(value) {
 	if (Array.isArray(value)) {
 		return value;
 	} else if (typeof value === 'string') {
-		return value.split(',').forEach(item => item.trim());
+		return value.split(',').map(item => item.trim());
 	}
 	throw new TypeError('You have passed an empty string/array to this function.  Please make sure you have specified a string or array.');
 }
